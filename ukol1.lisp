@@ -57,7 +57,7 @@
           (move (car (object-value obj)) dx dy)
         (if (or (eql obj-type 'polygon) (eql obj-type 'picture))
           (mapcar (lambda (val) (move val dx dy)) obj-val)
-          (progn (print obj) (error "Unknown object type")))))
+          (error "Unknown object type"))))
     obj)))
 
 ; COLOR ----------------------------------------------------------------------
