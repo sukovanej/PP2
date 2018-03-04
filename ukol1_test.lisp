@@ -4,7 +4,7 @@
         :prove))
 (in-package :ukol1-test)
 
-(load "ukol1.lisp")
+(load "milan-suk-1.lisp")
 
 (defun make-point-2 (x y)
   (let ((obj (make-point)))
@@ -19,7 +19,7 @@
          (let ((x (object-create 'a :c 12)))
          (is x (list 'a :c 12))
          (is (object-value x) 12)
-         (is (object-color x) :c)
+         (is (color x) :c)
          (is (object-type x) 'a)
          ))
 

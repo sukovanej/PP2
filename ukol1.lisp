@@ -45,20 +45,22 @@
 ; MOVE -----------------------------------------------------------------------
 
 (defun move (obj dx dy)
-  (let ((obj-type (object-type obj))
-        (obj-val (object-value obj)))
+  (let ((obj-type (object-type obj)))
     (progn
-      (if (eql obj-type 'point)
-        (progn
-          (set-x obj (+ (x obj) dx))
-          (set-y obj (+ (y obj) dy))
-          obj) 
-        (if (eql obj-type 'circle)
-          (move (car (object-value obj)) dx dy)
-        (if (or (eql obj-type 'polygon) (eql obj-type 'picture))
-          (mapcar (lambda (val) (move val dx dy)) obj-val)
-          (error "Unknown object type"))))
-    obj)))
+      (cond
+        ((eql obj-type 'point)
+         (progn (set-x obj (+ (x obj) dx))
+                (set-y obj (+ (y obj) dy))
+                obj))
+        ((eql obj-type 'circle)
+         (progn 
+           (print (center obj))
+         (move (center obj) dx dy))
+         )
+        ((or (eql obj-type 'polygon) (eql obj-type 'picture))
+         (mapcar (lambda (val) (move val dx dy)) (items obj)))
+        (T (error "Unknown object type")))
+      obj)))
 
 ; COLOR ----------------------------------------------------------------------
 
@@ -107,6 +109,10 @@
   (test-type circle 'circle)
   (setf (cadr (object-value circle)) val)
   circle)
+
+(defun center (circle)
+  (test-type circle 'circle) 
+  (car (object-value circle)))
 
 ; POLOYGON/PICTURE FUNCTIONS -------------------------------------------------
 
